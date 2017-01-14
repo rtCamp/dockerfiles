@@ -11,7 +11,7 @@ RUN apt-get update && \
         libmcrypt-dev \
         libreadline-dev \
         librecode-dev \
-        # libmemcached-dev \
+        libmemcached-dev \
         libpq-dev \
         libssl-dev \
         libxml2-dev \
