@@ -8,6 +8,7 @@ RUN apt-get update && \
         libc-client-dev \
         libkrb5-dev \
         libmcrypt-dev \
+        libreadline-dev
         librecode-dev \
         # libmemcached-dev \
         libpq-dev \
