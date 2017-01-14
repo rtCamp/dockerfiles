@@ -2,10 +2,6 @@ FROM php:7.1-fpm
 
 MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
 
-RUN apt-get update && apt-get install -y libz-dev libmemcached-dev
-RUN pecl install memcached
-RUN echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
-
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
@@ -47,8 +43,10 @@ RUN docker-php-ext-install \
         soap \
         xml
 
-RUN pecl install redis \
-    && pecl install zip \
+RUN pecl install \
+          memcache \
+          redis \
+          zip \
 
 RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
@@ -59,11 +57,12 @@ RUN apt-get update && apt-get install -y libmagickwand-6.q16-dev --no-install-re
   && ln -s /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/MagickWand-config /usr/bin \
   && pecl install imagick
 
-RUN docker-php-ext-enable imagick
-RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-enable opcache
-RUN docker-php-ext-enable redis
-RUN docker-php-ext-enable xdebug
+RUN docker-php-ext-enable \
+                    imagick \
+                    mcrypt \
+                    opcache \
+                    redis \
+                    xdebug
 
 RUN usermod -u 1000 www-data
 
