@@ -6,6 +6,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
         libc-client-dev \
+        libedit-dev \
         libkrb5-dev \
         libmcrypt-dev \
         libreadline-dev \
