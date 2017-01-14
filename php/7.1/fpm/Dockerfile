@@ -24,7 +24,7 @@ RUN apt-get install -y --no-install-recommends \
         --with-freetype-dir=/usr/include/freetype2 \
     && docker-php-ext-install gd
 
-RUN docker-php-ext-configure imap
+RUN docker-php-ext-configure imap \
         --with-imap-ssl \
         --with-kerberos \
     && docker-php-ext-install imap
