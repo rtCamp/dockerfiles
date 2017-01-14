@@ -5,6 +5,8 @@ MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
+        libc-client-dev \
+        libkrb5-dev \
         libmcrypt-dev \
         # libmemcached-dev \
         libpq-dev \
