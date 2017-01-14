@@ -64,7 +64,12 @@ RUN apt-get update && apt-get install -y libmagickwand-6.q16-dev --no-install-re
   && pecl install imagick
   # && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
 
-RUN docker-php-ext-enable imagick mcrypt memcache opcache redis xdebug
+RUN docker-php-ext-enable imagick
+RUN docker-php-ext-enable mcrypt
+RUN docker-php-ext-enable memcache
+RUN docker-php-ext-enable opcache
+RUN docker-php-ext-enable redis
+RUN docker-php-ext-enable xdebug
 
 RUN usermod -u 1000 www-data
 
