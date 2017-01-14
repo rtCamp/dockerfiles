@@ -2,6 +2,10 @@ FROM php:7.1-fpm
 
 MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
 
+RUN apt-get update && apt-get install -y libz-dev libmemcached-dev
+RUN pecl install memcached
+RUN echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
@@ -11,7 +15,6 @@ RUN apt-get update && \
         libmcrypt-dev \
         libreadline-dev \
         librecode-dev \
-        libmemcached-dev \
         libpq-dev \
         libssl-dev \
         libxml2-dev \
@@ -46,9 +49,6 @@ RUN docker-php-ext-install \
 
 RUN pecl install redis \
     && pecl install zip \
-
-RUN pecl install memcache memcached \
-    && docker-php-ext-enable memcache memcached
 
 RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
