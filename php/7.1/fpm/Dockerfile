@@ -11,7 +11,7 @@ RUN apt-get update && \
         libmcrypt-dev \
         libreadline-dev \
         librecode-dev \
-        libmemcached-dev \
+        # libmemcached-dev \
         libpq-dev \
         libssl-dev \
         libxml2-dev \
@@ -46,7 +46,8 @@ RUN docker-php-ext-install \
 
 RUN pecl install redis \
     && pecl install zip \
-    && pecl install memcache
+    && pecl install memcache \
+    echo "extension=memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini
 
 RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
