@@ -11,7 +11,7 @@ RUN apt-get update && \
         libmcrypt-dev \
         libreadline-dev \
         librecode-dev \
-        # libmemcached-dev \
+        libmemcached-dev \
         libpq-dev \
         libssl-dev \
         libxml2-dev \
@@ -46,28 +46,21 @@ RUN docker-php-ext-install \
 
 RUN pecl install redis \
     && pecl install zip \
-    && pecl install memcache \
-    echo "extension=memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini
+
+RUN pecl install memcache memcached \
+    && docker-php-ext-enable memcache memcached
 
 RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
-#
-# RUN apt-get install -y --no-install-recommends libmagickwand-6.q16-dev  \
-# 	&& ln -s /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/MagickWand-config /usr/bin/ \
-# 	&& pecl install imagick \
-# 	&& echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini \
-# 	&& rm -rf /var/lib/apt/lists/*
 
 RUN apt-get update && apt-get install -y libmagickwand-6.q16-dev --no-install-recommends \
   && ln -s /usr/lib/x86_64-linux-gnu/ImageMagick-6.8.9/bin-Q16/MagickWand-config /usr/bin \
   && pecl install imagick
-  # && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/ext-imagick.ini
 
 RUN docker-php-ext-enable imagick
 RUN docker-php-ext-enable mcrypt
-RUN docker-php-ext-enable memcache
 RUN docker-php-ext-enable opcache
 RUN docker-php-ext-enable redis
 RUN docker-php-ext-enable xdebug
