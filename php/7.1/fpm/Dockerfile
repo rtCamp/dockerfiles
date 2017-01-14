@@ -5,7 +5,7 @@ MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
-        libmcrypt-dev
+        libmcrypt-dev \
         # libmemcached-dev \
         libpq-dev \
         libssl-dev \
