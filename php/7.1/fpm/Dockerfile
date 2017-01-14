@@ -14,6 +14,7 @@ RUN apt-get update && \
         # libmemcached-dev \
         libpq-dev \
         libssl-dev \
+        libxml2-dev \
         libz-dev \
         zlib1g-dev
 
