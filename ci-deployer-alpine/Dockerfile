@@ -23,4 +23,4 @@ RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/compos
  && rm /tmp/installer.php \
  && composer --ansi --version --no-interaction
 
- RUN composer global require deployer/deployer deployer/recipes wp-cli/wp-cli
+ RUN composer global require deployer/deployer deployer/recipes codeception/codeception lucatume/wp-browser
