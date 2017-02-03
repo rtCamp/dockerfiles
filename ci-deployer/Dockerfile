@@ -1,47 +1,26 @@
-FROM php:7-cli
+FROM php:7-alpine
 
-Maintainer Mriyam Tamuli <mbtamuli@gmail.com>
+RUN apk --no-cache add curl git subversion openssh openssl mercurial tini bash rsync
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
-&& echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
+  && echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
-VOLUME /root/composer
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.3.1
 
-# Packages
-RUN apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng12-dev \
-    libbz2-dev \
-    libxslt-dev \
-    libldap2-dev \
-    php-pear \
-    curl \
-    git \
-    subversion \
-    unzip \
-    wget \
-  && rm -r /var/lib/apt/lists/*
+RUN curl -s -f -L -o /tmp/installer.php https://raw.githubusercontent.com/composer/getcomposer.org/2091762d2ebef14c02301f3039c41d08468fb49e/web/installer \
+ && php -r " \
+    \$signature = '55d6ead61b29c7bdee5cccfb50076874187bd9f21f65d8991d46ec5cc90518f447387fb9f76ebae1fbbacf329e583e30'; \
+    \$hash = hash('SHA384', file_get_contents('/tmp/installer.php')); \
+    if (!hash_equals(\$signature, \$hash)) { \
+        unlink('/tmp/installer.php'); \
+        echo 'Integrity check failed, installer is either corrupt or worse.' . PHP_EOL; \
+        exit(1); \
+    }" \
+ && php /tmp/installer.php --no-ansi --install-dir=/usr/bin --filename=composer --version=${COMPOSER_VERSION} \
+ && rm /tmp/installer.php \
+ && composer --ansi --version --no-interaction
 
-# PHP Extensions
-RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
-  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-  && docker-php-ext-install gd \
-  && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-  && docker-php-ext-install ldap
-
-# Setup the Composer installer
-RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
-  && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
-  && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
-
-# Install Composer
-RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
-
-RUN composer global require deployer/deployer deployer/recipes wp-cli/wp-cli
+ RUN composer global require deployer/deployer deployer/recipes codeception/codeception lucatume/wp-browser
