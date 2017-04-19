@@ -26,6 +26,7 @@ RUN apt-get update && \
     subversion \
     unzip \
     wget \
+    mariadb-server \
   && rm -r /var/lib/apt/lists/*
 
 # PHP Extensions
@@ -33,6 +34,9 @@ RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd \
   && docker-php-ext-install mysqli
+
+# Start MYSQL Service and set root password as root
+RUN service mysql start && mysql -e "create database wp" && mysqladmin -u root password root
 
 # Setup the Composer installer
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
