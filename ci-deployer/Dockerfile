@@ -24,7 +24,7 @@ RUN apt-get update && \
     curl \
     git \
     subversion \
-    unzip \
+    zip unzip \
     wget \
     mariadb-server \
   && rm -r /var/lib/apt/lists/*
@@ -47,3 +47,6 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
 RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
 
 RUN composer global require deployer/deployer deployer/recipes wp-cli/wp-cli
+
+#Install phpcs
+RUN composer global require squizlabs/php_codesniffer ~2.9.0 
