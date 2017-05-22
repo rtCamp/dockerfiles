@@ -48,8 +48,5 @@ RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filenam
 
 RUN composer global require deployer/deployer deployer/recipes wp-cli/wp-cli
 
-#Install phpcs with wordpress standards
-RUN composer global require squizlabs/php_codesniffer ~2.9.0 \
-  && mkdir /tmp/wpcs \
-  && curl -L https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/archive/master.tar.gz | tar xz --strip-components=1 -C /tmp/wpcs \
-  && phpcs --config-set installed_paths /tmp/wpcs
+#Install phpcs
+RUN composer global require squizlabs/php_codesniffer ~2.9.0 
