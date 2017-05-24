@@ -36,8 +36,15 @@ RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
   && docker-php-ext-install gd \
   && docker-php-ext-install mysqli
 
-RUN pecl install memcached \
-  && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/memcached.so" > /usr/local/etc/php/conf.d/ext-memcache.ini
+RUN cd /tmp \
+  && git clone https://github.com/bnap00/pecl-memcache.git memcache \
+  && cd memcache \ 
+  && /usr/local/bin/phpize \
+  && ./configure --with-php-config=/usr/local/bin/php-config \
+  && make \
+  && make install \
+  && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini  \
+  && rm -rf /tmp/memcache
 
 # Start MYSQL Service and set root password as root
 RUN service mysql start && mysql -e "create database wp" && mysqladmin -u root password root
