@@ -27,6 +27,7 @@ RUN apt-get update && \
     zip unzip \
     wget \
     mariadb-server \
+    libmemcached-dev libmemcached11 \
   && rm -r /var/lib/apt/lists/*
 
 # PHP Extensions
@@ -34,6 +35,9 @@ RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
   && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
   && docker-php-ext-install gd \
   && docker-php-ext-install mysqli
+
+RUN pecl install memcached \
+  && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/memcached.so" > /usr/local/etc/php/conf.d/ext-memcache.ini
 
 # Start MYSQL Service and set root password as root
 RUN service mysql start && mysql -e "create database wp" && mysqladmin -u root password root
@@ -44,6 +48,8 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
   && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
 
 # Install Composer
+RUN mkdir -p /composer
+COPY composer.lock /composer
 RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
 
 RUN composer global require "deployer/deployer <5" deployer/recipes wp-cli/wp-cli
