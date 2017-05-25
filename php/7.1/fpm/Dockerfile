@@ -15,7 +15,8 @@ RUN apt-get update && \
         libssl-dev \
         libxml2-dev \
         libz-dev \
-        zlib1g-dev
+        zlib1g-dev \ 
+        git
 
 RUN apt-get install -y --no-install-recommends \
         libfreetype6-dev \
@@ -41,14 +42,14 @@ RUN docker-php-ext-install \
         recode \
         readline \
         soap \
-        xml
+        xml \
+        zip 
 
-RUN pecl install redis \
-    && pecl install zip
+RUN pecl install redis 
 
 RUN cd /tmp \
     && git clone https://github.com/bnap00/pecl-memcache.git memcache \
-    && cd memcache \ 
+    && cd memcache \
     && /usr/local/bin/phpize \
     && ./configure --with-php-config=/usr/local/bin/php-config \
     && make \
