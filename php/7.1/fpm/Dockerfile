@@ -1,6 +1,6 @@
 FROM php:7.1-fpm
 
-MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \

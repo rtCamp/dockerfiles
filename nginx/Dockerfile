@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-MAINTAINER Mriyam Tamuli <mbtamuli@gmail.com>
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
 
 RUN export GNUPGHOME="$(mktemp -d)" \
     && gpg --keyserver "hkp://pgp.mit.edu" --recv-keys '3050AC3CD2AE6F03' \
