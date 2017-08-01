@@ -1,6 +1,6 @@
 FROM ubuntu:xenial
 
-Maintainer Mriyam Tamuli <mbtamuli@gmail.com>
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
 
 RUN apt update && apt install -qqy wget
 
