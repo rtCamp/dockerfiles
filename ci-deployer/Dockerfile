@@ -38,7 +38,7 @@ RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
 
 RUN cd /tmp \
   && git clone https://github.com/bnap00/pecl-memcache.git memcache \
-  && cd memcache \ 
+  && cd memcache \
   && /usr/local/bin/phpize \
   && ./configure --with-php-config=/usr/local/bin/php-config \
   && make \
@@ -59,7 +59,4 @@ RUN mkdir -p /composer
 COPY composer.lock /composer
 RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
 
-RUN composer global require "deployer/deployer <5" deployer/recipes wp-cli/wp-cli
-
-#Install phpcs
-RUN composer global require squizlabs/php_codesniffer ~2.9.0 
+RUN composer global require "deployer/deployer <5" "deployer/recipes ~4.0" "squizlabs/php_codesniffer ~2.9.0" wp-cli/wp-cli
