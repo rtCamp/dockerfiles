@@ -14,4 +14,4 @@ RUN apk add --update wget ca-certificates unzip python py-pip openssl bash && \
     apk del build-dependencies && \
     rm -rf /var/cache/apk/* /terraform.zip
 
-COPY setup_terraform /bin/setup_terraform
+COPY setup_* /bin/
