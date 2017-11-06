@@ -60,3 +60,11 @@ COPY composer.lock /composer
 RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
 
 RUN composer global require "deployer/deployer <5" "deployer/recipes ~4.0" "squizlabs/php_codesniffer ~2.9.0" wp-cli/wp-cli
+
+# Download and load nvm in environment
+wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash > /dev/null 2>&1
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# Install node
+nvm install node > /dev/null 2>&1
