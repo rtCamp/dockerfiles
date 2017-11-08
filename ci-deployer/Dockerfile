@@ -6,14 +6,18 @@ RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 && echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
 VOLUME /root/composer
+ENV HOME /root
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.3.1
+ENV NVM_DIR "$HOME/.nvm"
+ENV NODE_VERSION lts
 
 # Packages
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
+	  apt-transport-https \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
@@ -29,6 +33,8 @@ RUN apt-get update && \
     mariadb-server \
     libmemcached-dev libmemcached11 \
   && rm -r /var/lib/apt/lists/*
+
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # PHP Extensions
 RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
@@ -56,15 +62,26 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
 
 # Install Composer
 RUN mkdir -p /composer
-COPY composer.lock /composer
 RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php
+COPY composer.* /composer/
+RUN cd /composer && composer install
 
-RUN composer global require "deployer/deployer <5" "deployer/recipes ~4.0" "squizlabs/php_codesniffer ~2.9.0" wp-cli/wp-cli
-
+RUN apt update > /dev/null
+RUN cat ~/.bashrc
 # Download and load nvm in environment
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash > /dev/null 2>&1
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
+RUN ls ~/.nvm
+RUN cat ~/.bashrc
+# install node and npm
+RUN bash -c "[ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh \
+    && nvm install --lts \
+    && nvm use default"
 
-# Install node
-nvm install node > /dev/null 2>&1
+# add node and npm to path so the commands are available
+# ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+# ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# install yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update > /dev/null && apt-get install yarn -qqy
