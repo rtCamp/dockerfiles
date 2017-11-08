@@ -66,22 +66,16 @@ RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filenam
 COPY composer.* /composer/
 RUN cd /composer && composer install
 
-RUN apt update > /dev/null
-RUN cat ~/.bashrc
 # Download and load nvm in environment
 RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash
-RUN ls ~/.nvm
-RUN cat ~/.bashrc
 # install node and npm
 RUN bash -c "[ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh \
     && nvm install --lts \
     && nvm use default"
 
-# add node and npm to path so the commands are available
-# ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
-# ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-
 # install yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update > /dev/null && apt-get install yarn -qqy
+RUN bash -c "[ -s $NVM_DIR/nvm.sh ] && \. $NVM_DIR/nvm.sh \
+    && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && echo \"deb https://dl.yarnpkg.com/debian/ stable main\" | tee /etc/apt/sources.list.d/yarn.list \
+    && apt-get update > /dev/null && apt-get install yarn -qqy \
+    && yarn config set cache-folder ~/.yarn_cache"
