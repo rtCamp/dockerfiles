@@ -24,7 +24,6 @@ RUN apt-get update && \
     libpng12-dev \
     libbz2-dev \
     libxslt-dev \
-    php-pear \
     curl \
     git \
     subversion \
