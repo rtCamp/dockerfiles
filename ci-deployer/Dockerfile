@@ -1,4 +1,4 @@
-FROM php:7-cli
+FROM php:7.1-cli
 
 LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
 
@@ -10,7 +10,7 @@ ENV HOME /root
 ENV PATH "/composer/vendor/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.3.1
+ENV COMPOSER_VERSION 1.5.6
 ENV NVM_DIR "$HOME/.nvm"
 ENV NODE_VERSION lts
 
