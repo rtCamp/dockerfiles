@@ -13,4 +13,4 @@ RUN curl https://getcomposer.org/download/$(curl -LSs https://api.github.com/rep
     && chmod +x wp-cli.phar \
 		&& mv wp-cli.phar /usr/local/bin/wp
 
-RUN echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+RUN echo "mailhub=mail:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
