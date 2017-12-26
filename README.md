@@ -11,3 +11,4 @@ Build status:
 | [nginx-build](https://hub.docker.com/r/rtcamp/nginx-build/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/nginx-build.svg)]() |
 | [nginx](https://hub.docker.com/r/rtcamp/nginx/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/nginx.svg)]() |
 | [php:7.1-fpm](https://hub.docker.com/r/rtcamp/php/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/php.svg)]() |
+| [wordpress](https://hub.docker.com/r/rtcamp/wordpress/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/wordpress.svg)]() |
