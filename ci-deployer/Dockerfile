@@ -7,7 +7,7 @@ RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 
 VOLUME /root/composer
 ENV HOME /root
-ENV PATH "/composer/vendor/bin:$PATH"
+ENV PATH "/composer/vendor/bin:~/.local/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
 ENV COMPOSER_VERSION 1.5.6
@@ -31,9 +31,15 @@ RUN apt-get update && \
     wget \
     mariadb-server \
     libmemcached-dev libmemcached11 \
+    python-pip \
+    python-dev \
+    libyaml-dev \
   && rm -r /var/lib/apt/lists/*
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+# Installing awscli
+RUN pip install --quiet awscli --upgrade --user
 
 # PHP Extensions
 RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
