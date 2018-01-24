@@ -5,7 +5,6 @@ LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>, Shantanu Deshpande <shanta
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 && echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
 
-VOLUME /root/composer
 ENV HOME /root
 ENV PATH "/composer/vendor/bin:~/.local/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
