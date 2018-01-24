@@ -1,5 +1,7 @@
 FROM ruby:2.5.0-stretch
 
+LABEL maintainer="Shantanu Deshpande <shantanud106@gmail.com>"
+
 ENV LANG C.UTF-8
 
 RUN groupadd --gid 1000 node \
