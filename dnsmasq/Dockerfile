@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.7
 LABEL maintainer="Dharmin Shah <dharminshah175@gmail.com>"
 
 RUN apk update \
