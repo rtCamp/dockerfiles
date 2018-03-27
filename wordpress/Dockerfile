@@ -95,5 +95,7 @@ RUN echo "mailhub=mail:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp
 
 COPY docker-entrypoint.sh /usr/local/bin/
 
+RUN chown -R www-data:www-data /var/www
+
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
