@@ -21,7 +21,7 @@ RUN apt-get update && \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
-    libpng12-dev \
+    libpng-dev \
     libbz2-dev \
     libxslt-dev \
     curl \
@@ -29,7 +29,8 @@ RUN apt-get update && \
     subversion \
     zip unzip \
     wget \
-    mariadb-server \
+    gnupg \
+    mysql-client \
     libmemcached-dev libmemcached11 \
     python-pip \
     python-dev \
@@ -56,9 +57,6 @@ RUN cd /tmp \
   && make install \
   && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini  \
   && rm -rf /tmp/memcache
-
-# Start MYSQL Service and set root password as root
-RUN service mysql start && mysql -e "create database wp" && mysqladmin -u root password root
 
 # Setup the Composer installer
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
