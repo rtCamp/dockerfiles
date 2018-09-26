@@ -1,6 +1,6 @@
 FROM php:7.1-cli
 
-LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>, Utkarsh Patel <utkarsh.patel@rtcamp.com>, Vaishali Agola <vaishaliagola27@gmail.com>"
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 && echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
