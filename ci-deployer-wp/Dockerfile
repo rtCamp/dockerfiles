@@ -10,31 +10,32 @@ ENV HOME /root
 ENV PATH "/composer/vendor/bin:~/.local/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.5.6
+ENV COMPOSER_VERSION 1.8.0
 ENV NVM_DIR "$HOME/.nvm"
 ENV NODE_VERSION lts
 
 # Packages
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	  apt-transport-https \
+	apt-transport-https \
+    curl \
+    git \
+    gnupg \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpng-dev \
     libbz2-dev \
     libxslt-dev \
-    curl \
-    git \
-    subversion \
-    zip unzip \
-    wget \
-    gnupg \
-    mysql-client \
     libmemcached-dev libmemcached11 \
-    python-pip \
-    python-dev \
     libyaml-dev \
+    mysql-client \
+    python-dev \
+    python-pip \
+    subversion \
+    unzip \
+    wget \
+    zip \
   && rm -r /var/lib/apt/lists/*
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
