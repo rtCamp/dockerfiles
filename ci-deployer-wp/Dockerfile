@@ -27,7 +27,8 @@ RUN apt-get update && \
     libpng-dev \
     libbz2-dev \
     libxslt-dev \
-    libmemcached-dev libmemcached11 \
+    libmemcached-dev \
+    libmemcached11 \
     libyaml-dev \
     mysql-client \
     python-dev \
