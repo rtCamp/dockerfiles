@@ -1,6 +1,6 @@
 FROM php:7.1-cli
 
-LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>"
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>, Utkarsh Patel <utkarsh.patel@rtcamp.com>, Vaishali Agola <vaishaliagola27@gmail.com>"
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 && echo "date.timezone=Asia/Kolkata" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
@@ -10,30 +10,33 @@ ENV HOME /root
 ENV PATH "/composer/vendor/bin:~/.local/bin:$PATH"
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /composer
-ENV COMPOSER_VERSION 1.5.6
+ENV COMPOSER_VERSION 1.8.0
 ENV NVM_DIR "$HOME/.nvm"
 ENV NODE_VERSION lts
 
 # Packages
 RUN apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	  apt-transport-https \
+	apt-transport-https \
+    curl \
+    git \
+    gnupg \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
-    libpng12-dev \
+    libpng-dev \
     libbz2-dev \
     libxslt-dev \
-    curl \
-    git \
-    subversion \
-    zip unzip \
-    wget \
-    mariadb-server \
-    libmemcached-dev libmemcached11 \
-    python-pip \
-    python-dev \
+    libmemcached-dev \
+    libmemcached11 \
     libyaml-dev \
+    mysql-client \
+    python-dev \
+    python-pip \
+    subversion \
+    unzip \
+    wget \
+    zip \
   && rm -r /var/lib/apt/lists/*
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
@@ -43,7 +46,7 @@ RUN pip install --quiet awscli --upgrade --user
 
 # PHP Extensions
 RUN docker-php-ext-install bcmath mcrypt zip bz2 mbstring pcntl xsl \
-  && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+  && docker-php-ext-configure gd --with-freetype-dir=/usr --with-jpeg-dir=/usr; \
   && docker-php-ext-install gd \
   && docker-php-ext-install mysqli
 
@@ -56,9 +59,6 @@ RUN cd /tmp \
   && make install \
   && echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/memcache.so" > /usr/local/etc/php/conf.d/ext-memcache.ini  \
   && rm -rf /tmp/memcache
-
-# Start MYSQL Service and set root password as root
-RUN service mysql start && mysql -e "create database wp" && mysqladmin -u root password root
 
 # Setup the Composer installer
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
