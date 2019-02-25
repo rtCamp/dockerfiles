@@ -4,14 +4,10 @@ These are various Dockerfiles in use by rtCamp.
 
 Build status:
 
-| DockerHub Image| Build Status  |
-| -------------- |:-------------:|
-| [ci-deployer](https://hub.docker.com/r/rtcamp/ci-deployer/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/ci-deployer.svg)]() |
-| [infra-builder](https://hub.docker.com/r/rtcamp/infra-builder/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/infra-builder.svg)]() |
-| [nginx-build](https://hub.docker.com/r/rtcamp/nginx-build/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/nginx-build.svg)]() |
-| [nginx](https://hub.docker.com/r/rtcamp/nginx/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/nginx.svg)]() |
-| [php:7.1-fpm](https://hub.docker.com/r/rtcamp/php/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/php.svg)]() |
-| [php:7.2-cli-alpine](https://hub.docker.com/r/rtcamp/php) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/php.svg)]() |
-| [wordpress](https://hub.docker.com/r/rtcamp/wordpress/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/wordpress.svg)]() |
-| [deployer-ruby-node](https://hub.docker.com/r/rtcamp/deployer-ruby-node/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/deployer-ruby-node.svg)]() |
-| [deployer-wp](https://hub.docker.com/r/rtcamp/deployer-wp/) | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/deployer-wp.svg)]() |
+| DockerHub Image| Description     | Build Status  |
+| -------------- | --------------- |:-------------:|
+| [ci-deployer](https://hub.docker.com/r/rtcamp/ci-deployer/) | Docker image used for ci-cd deployments using [deployer](https://deployer.org/). | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/ci-deployer.svg)]() |
+| [nginx-build](https://hub.docker.com/r/rtcamp/nginx-build/) | rtCamp nginx-build docker image. | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/nginx-build.svg)]() |
+| [php:7.2-cli-alpine](https://hub.docker.com/r/rtcamp/php/) | Alpine based php-cli image. Used as base php-cli image for GitHub actions. | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/php.svg)]() |
+| [vip-go-ci](https://hub.docker.com/r/rtcamp/vip-go-ci/) | Docker image for GitHub action to run vip-go-ci testing. | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/vip-go-ci.svg)]() |
+| [wordpress](https://hub.docker.com/r/rtcamp/wordpress/) | PHP-7.2-fpm image with WordPress configuration and setup. | [![Docker Build Status](https://img.shields.io/docker/build/rtcamp/wordpress.svg)]() | |
