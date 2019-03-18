@@ -1,9 +1,11 @@
 FROM php:7.1-apache
-MAINTAINER Thrijith Thankachan <thrijith13@gmail.com>
 
-#
+LABEL maintainer="Thrijith Thankachan <thrijith13@gmail.com>"
+
 # Install basic requirements
-#
+# Install Node (with NPM), and Yarn (via package manager for Debian)
+# Install Subversion
+# Install gulp and grunt
 RUN apt-get update \
  && apt-get install -y \
  curl \
@@ -26,18 +28,15 @@ RUN apt-get update \
  libldap2-dev \
  libmcrypt-dev \
  gnupg \
- && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-
-#
-# Install Node (with NPM), and Yarn (via package manager for Debian)
-#
-# https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-RUN apt-get update \
+ subversion rsync \
+ && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+ && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+ && apt-get update \
  && apt-get install -y \
- nodejs
-RUN npm install -g yarn
+ nodejs \
+ && npm install -g yarn \
+ && npm install -g grunt-cli \
+ && npm install --global gulp-cli
 
 #
 # Install Composer
@@ -58,12 +57,3 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 #
 # Increase PHP memory limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/timezone.ini
-
-# Install Subversion
-RUN apt-get update \
-	&& apt-get install -y subversion rsync \
-	&& apt-get clean -y \
-	&& rm -rf /var/lib/apt/lists/*
-
-# Install gulp and grunt
-RUN npm install -g grunt-cli && npm install --global gulp-cli
