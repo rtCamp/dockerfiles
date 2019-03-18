@@ -53,4 +53,4 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 # PHP configuration
 #
 # Increase PHP memory limit
-RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/timezone.ini
+RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
