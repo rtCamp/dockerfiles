@@ -6,8 +6,8 @@ LABEL maintainer="Thrijith Thankachan <thrijith13@gmail.com>"
 # Install Node (with NPM), and Yarn (via package manager for Debian)
 # Install Subversion
 # Install gulp and grunt
-RUN apt-get update \
- && apt-get install -y \
+RUN apt update \
+ && apt install -y \
  curl \
  apt-transport-https \
  git \
@@ -29,14 +29,11 @@ RUN apt-get update \
  libmcrypt-dev \
  gnupg \
  subversion rsync \
- && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
- && apt-get update \
- && apt-get install -y \
- nodejs \
- && npm install -g yarn \
- && npm install -g grunt-cli \
- && npm install --global gulp-cli
+ && apt update \
+ && apt install -y nodejs \
+ && apt clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+ && npm install -g yarn grunt-cli gulp-cli
 
 #
 # Install Composer
