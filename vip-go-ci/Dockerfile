@@ -1,6 +1,7 @@
 # ubuntu:latest at 2019-02-12T19:22:56IST
 FROM ubuntu@sha256:7a47ccc3bbe8a451b500d2b53104868b46d60ee8f5b35a24b41a86077c650210
 
+LABEL maintainer="Mriyam Tamuli <mbtamuli@gmail.com>, Riddhesh Sanghvi <riddheshsanghvi96@gmail.com>"
 LABEL "com.github.actions.icon"="code"
 LABEL "com.github.actions.color"="purple"
 LABEL "com.github.actions.name"="Testing"
